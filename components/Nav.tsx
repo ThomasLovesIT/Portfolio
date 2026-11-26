@@ -41,7 +41,7 @@ export default function Nav() {
     <div className="px-page pointer-events-none fixed inset-x-0 top-5 z-50 flex items-center justify-between">
       <Link href="/" onClick={(e) => { if (isHome) { e.preventDefault(); lenis?.scrollTo(0); } }}
         className={`${pill} flex items-center gap-2 px-3.5 py-2 text-sm font-bold tracking-[-.01em] !text-ink`}>
-        <span className="size-2 rounded-full bg-accent" />{site.domain}
+        <span className="size-2 rounded-full bg-accent" /><span className="sr-only sm:not-sr-only">{site.domain}</span>
       </Link>
       <nav className={`${pill} relative z-[51] flex gap-0.5 p-1 font-mono text-xs`}>
         {ITEMS.map(([id, label]) => (

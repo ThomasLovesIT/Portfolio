@@ -12,7 +12,7 @@ function Chips({ list, value, set, name }: { list: string[]; value: number; set:
     <span role="radiogroup" aria-label={name}>
       {list.map((l, i) => (
         <button key={l} type="button" role="radio" aria-checked={value === i} onClick={() => set(i)}
-          className="mx-[3px] cursor-pointer rounded-full border-[1.5px] border-ink px-3.5 py-1.5 align-[.25em] text-[.55em] font-semibold transition-all duration-200"
+          className="mx-[3px] cursor-pointer rounded-full border-[1.5px] border-ink px-3.5 py-1.5 align-[.25em] text-[.55em] font-semibold transition-all duration-200 max-md:py-2 max-md:text-[.7em]"
           style={{ background: value === i ? '#111' : 'transparent', color: value === i ? '#F2EFE6' : '#111' }}>
           {l}
         </button>

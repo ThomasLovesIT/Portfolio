@@ -21,7 +21,7 @@ export default function Home() {
           <div className="relative aspect-[4/5] flex-[0_0_min(300px,100%)] overflow-hidden rounded-md bg-ph">
             <Image src="/portrait.jpg" alt={`Portrait of ${site.name}`} fill priority sizes="300px" className="object-cover" style={{ objectPosition: '46% 30%' }} />
           </div>
-          <div className="max-w-[680px] flex-[1_1_360px]"><TypedIntro /></div>
+          <div className="max-w-[680px] flex-[1_1_360px] max-md:order-first"><TypedIntro /></div>
         </div>
       </section>
 
@@ -30,10 +30,10 @@ export default function Home() {
         <div className="mb-3.5 font-mono text-xs text-accent">{"// what I've built"}</div>
         <div className="relative">
           <h2 data-reveal="" className={h2}>Selected work.</h2>
-          <span aria-hidden="true" className="pointer-events-none absolute right-[4%] top-[-10%] rotate-[-8deg] font-hand text-[clamp(48px,8vw,120px)] font-bold leading-none text-orange">shipped!</span>
+          <span aria-hidden="true" className="pointer-events-none absolute bottom-0 right-[4%] rotate-[-8deg] md:bottom-auto md:top-[-10%] font-hand text-[clamp(48px,8vw,120px)] font-bold leading-none text-orange">shipped!</span>
         </div>
         <WorkList />
-        <div className="mt-7 font-mono text-xs text-muted">Click a project for the full case study →</div>
+        <div className="mt-7 font-mono text-xs text-muted">Open a project for the full case study →</div>
       </section>
 
       <section id="path" className="px-page relative overflow-hidden bg-accent pb-40 pt-30 text-white">
