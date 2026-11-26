@@ -1,103 +1,73 @@
-import Image from "next/image";
+import Image from 'next/image';
+import TypedIntro from '@/components/TypedIntro';
+import WorkList from '@/components/WorkList';
+import PathTimeline from '@/components/PathTimeline';
+import Contact from '@/components/Contact';
+import { site, cursorMessages } from '@/lib/content';
+
+const h2 = 'm-0 text-[clamp(56px,10vw,150px)] font-extrabold leading-[.9] tracking-[-.055em]';
+const metaLabel = 'mb-2 font-mono text-[11px] text-muted';
+const ulink = '!text-ink border-b border-ink';
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <main>
+      <section id="top" className="px-page relative mx-auto max-w-page pb-20 pt-[clamp(120px,16vh,180px)]">
+        <div data-reveal="" className="mb-5 font-mono text-xs tracking-[.04em] text-accent">{site.heroLabel}</div>
+        <h1 data-reveal="" className="m-0 text-[clamp(56px,9.5vw,150px)] font-extrabold leading-[.88] tracking-[-.055em]">
+          {site.name}<span className="text-accent">.</span>
+        </h1>
+        <div className="mt-[clamp(40px,7vh,72px)] flex flex-wrap items-end gap-[clamp(28px,5vw,72px)]">
+          <div className="relative aspect-[4/5] flex-[0_0_min(300px,100%)] overflow-hidden rounded-md bg-ph">
+            <Image src="/portrait.jpg" alt={`Portrait of ${site.name}`} fill priority sizes="300px" className="object-cover" style={{ objectPosition: '46% 30%' }} />
+          </div>
+          <div className="max-w-[680px] flex-[1_1_360px]"><TypedIntro /></div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+
+      <section id="work" className="px-page relative mx-auto max-w-page pb-30 pt-25">
+        <span data-cursor={cursorMessages.work} className="absolute right-[30%] top-[330px] size-px" />
+        <div className="mb-3.5 font-mono text-xs text-accent">{"// what I've built"}</div>
+        <div className="relative">
+          <h2 data-reveal="" className={h2}>Selected work.</h2>
+          <span aria-hidden="true" className="pointer-events-none absolute right-[4%] top-[-10%] rotate-[-8deg] font-hand text-[clamp(48px,8vw,120px)] font-bold leading-none text-orange">shipped!</span>
+        </div>
+        <WorkList />
+        <div className="mt-7 font-mono text-xs text-muted">Click a project for the full case study →</div>
+      </section>
+
+      <section id="path" className="px-page relative overflow-hidden bg-accent pb-40 pt-30 text-white">
+        <span data-cursor={cursorMessages.path} className="absolute right-[22%] top-[220px] size-px" />
+        <div className="mx-auto max-w-page">
+          <div className="mb-3.5 font-mono text-xs text-white/75">{'// from first commit to now'}</div>
+          <h2 data-reveal="" className={h2}>The path.</h2>
+          <PathTimeline />
+        </div>
+      </section>
+
+      <section id="contact" className="px-page relative mx-auto max-w-page pb-25 pt-[130px]">
+        <span data-cursor={cursorMessages.contact} className="absolute right-[16%] top-[200px] size-px" />
+        <div className="mb-3.5 font-mono text-xs text-accent">{'// contact'}</div>
+        <h2 data-reveal="" className="m-0 text-[clamp(64px,12vw,180px)] font-extrabold leading-[.88] tracking-[-.06em]">
+          Say <span className="text-accent">hello.</span>
+        </h2>
+        <div className="mt-12 grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-6 border-y border-ink/14 py-[22px]">
+          <div className="min-w-0 sm:col-span-2">
+            <div className={metaLabel}>EMAIL</div>
+            <a href={`mailto:${site.email}`} className={`${ulink} break-all font-semibold`}>{site.email}</a>
+          </div>
+          <div>
+            <div className={metaLabel}>ELSEWHERE</div>
+            <div className="flex gap-3.5 font-semibold">
+              <a href={site.github} target="_blank" rel="noreferrer" className={ulink}>GitHub</a>
+              <a href={site.linkedin} target="_blank" rel="noreferrer" className={ulink}>LinkedIn</a>
+            </div>
+          </div>
+          <div><div className={metaLabel}>BASED IN</div><div className="font-semibold">{site.location}</div></div>
+          <div><div className={metaLabel}>REPLY TIME</div><div className="font-semibold">{site.replyTime}</div></div>
+        </div>
+        <Contact />
+      </section>
+    </main>
   );
 }
