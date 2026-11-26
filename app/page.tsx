@@ -21,7 +21,7 @@ export default function Home() {
           <div className="relative aspect-[4/5] flex-[0_0_min(300px,100%)] overflow-hidden rounded-md bg-ph">
             <Image src="/portrait.jpg" alt={`Portrait of ${site.name}`} fill priority sizes="300px" className="object-cover" style={{ objectPosition: '46% 30%' }} />
           </div>
-          <div className="max-w-[680px] flex-[1_1_360px] max-md:order-first"><TypedIntro /></div>
+          <div className="max-w-[680px] flex-[1_1_360px]"><TypedIntro /></div>
         </div>
       </section>
 

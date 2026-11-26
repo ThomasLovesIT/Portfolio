@@ -6,21 +6,11 @@ const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 
 // Scripted cursor that glides to the active [data-cursor] anchor and shows its message.
 export default function AgentCursor() {
-  const [enabled, setEnabled] = useState(false);
   const [msg, setMsg] = useState('');
   const [bub, setBub] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const mq = matchMedia('(hover: hover) and (min-width: 768px)');
-    const f = () => setEnabled(mq.matches);
-    f();
-    mq.addEventListener('change', f);
-    return () => mq.removeEventListener('change', f);
-  }, []);
-
-  useEffect(() => {
-    if (!enabled) return;
     const pos = { x: -200, y: 300 };
     let raf = 0, bt = 0, cur = '';
     const loop = (t: number) => {
@@ -42,9 +32,8 @@ export default function AgentCursor() {
     };
     raf = requestAnimationFrame(loop);
     return () => { cancelAnimationFrame(raf); clearTimeout(bt); };
-  }, [enabled]);
+  }, []);
 
-  if (!enabled) return null;
   return (
     <div ref={ref} aria-hidden="true" className="pointer-events-none fixed left-0 top-0 z-60" style={{ transform: 'translate3d(-200px,300px,0)' }}>
       <svg width="22" height="22" viewBox="0 0 22 22" className="block drop-shadow-[0_2px_3px_rgba(0,0,0,.25)]">
