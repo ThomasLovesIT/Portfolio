@@ -25,8 +25,7 @@ export default function TypedIntro() {
 
   useEffect(() => {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) { setN(TOTAL); return; }
-    const start = performance.now();
-    let typeN = 0, last = start, pauseUntil = 0, raf = 0;
+    let start = 0, typeN = 0, last = 0, pauseUntil = 0, raf = 0;
     const loop = (t: number) => {
       const now = performance.now(), dt = Math.min(64, now - last);
       last = now;
@@ -43,8 +42,10 @@ export default function TypedIntro() {
       setBlink(Math.floor(t / 450) % 2 ? 1 : 0.15);
       if (f < TOTAL) raf = requestAnimationFrame(loop);
     };
-    raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
+    const go = () => { start = last = performance.now(); raf = requestAnimationFrame(loop); };
+    // Wait for IntroLoader to slide away; html[data-intro] is set once it's skipped or finished.
+    if (document.documentElement.dataset.intro) go(); else addEventListener('intro-done', go, { once: true });
+    return () => { removeEventListener('intro-done', go); cancelAnimationFrame(raf); };
   }, []);
 
   const done = n >= TOTAL;

@@ -9,38 +9,44 @@ export default function PathTimeline() {
   const [on, setOn] = useState<boolean[]>(() => milestones.map(() => false));
 
   useEffect(() => {
-    const p = path.current!, w = wrap.current!, h = head.current!;
-    // Pre-sample with a running-max Y so scroll progress (a Y position) maps through the loop in the curve.
-    const total = p.getTotalLength(), N = 700, s: { l: number; x: number; y: number; cm: number }[] = [];
-    let cm = -1;
-    for (let i = 0; i <= N; i++) { const l = (total * i) / N, q = p.getPointAtLength(l); cm = Math.max(cm, q.y); s.push({ l, x: q.x, y: q.y, cm }); }
-    const nodeLens = milestones.map((n) => {
-      let best = 0, bd = Infinity;
-      for (const q of s) { const d = (q.x - n.x) ** 2 + (q.y - n.y) ** 2; if (d < bd) { bd = d; best = q.l; } }
-      return best;
-    });
-    p.style.strokeDasharray = `${total} ${total}`;
-    p.style.strokeDashoffset = `${total}`;
-    p.style.opacity = '1';
+    let raf = 0;
+    const start = () => {
+      const p = path.current!, w = wrap.current!, h = head.current!;
+      // Pre-sample with a running-max Y so scroll progress (a Y position) maps through the loop in the curve.
+      const total = p.getTotalLength(), N = 150, s: { l: number; x: number; y: number; cm: number }[] = [];
+      let cm = -1;
+      for (let i = 0; i <= N; i++) { const l = (total * i) / N, q = p.getPointAtLength(l); cm = Math.max(cm, q.y); s.push({ l, x: q.x, y: q.y, cm }); }
+      const nodeLens = milestones.map((n) => {
+        let best = 0, bd = Infinity;
+        for (const q of s) { const d = (q.x - n.x) ** 2 + (q.y - n.y) ** 2; if (d < bd) { bd = d; best = q.l; } }
+        return best;
+      });
+      p.style.strokeDasharray = `${total} ${total}`;
+      p.style.strokeDashoffset = `${total}`;
+      p.style.opacity = '1';
 
-    let len = 0, shown = -1, raf = 0;
-    const loop = () => {
-      const r = w.getBoundingClientRect(), ty = clamp((innerHeight * 0.6 - r.top) / r.height, 0, 1) * 2000;
-      let target = 0;
-      for (const q of s) { if (q.cm <= ty) target = q.l; else break; }
-      len += (target - len) * 0.09;
-      if (Math.abs(len - shown) > 0.3) {
-        shown = len;
-        p.style.strokeDashoffset = `${total - len}`;
-        const pt = p.getPointAtLength(len);
-        h.style.left = pt.x / 10 + '%'; h.style.top = pt.y / 20 + '%';
-        const next = nodeLens.map((l) => len >= l - 2);
-        setOn((prev) => (next.every((v, i) => v === prev[i]) ? prev : next));
-      }
+      let len = 0, shown = -1;
+      const loop = () => {
+        const r = w.getBoundingClientRect(), ty = clamp((innerHeight * 0.6 - r.top) / r.height, 0, 1) * 2000;
+        let target = 0;
+        for (const q of s) { if (q.cm <= ty) target = q.l; else break; }
+        len += (target - len) * 0.09;
+        if (Math.abs(len - shown) > 0.3) {
+          shown = len;
+          p.style.strokeDashoffset = `${total - len}`;
+          const pt = p.getPointAtLength(len);
+          h.style.left = pt.x / 10 + '%'; h.style.top = pt.y / 20 + '%';
+          const next = nodeLens.map((l) => len >= l - 2);
+          setOn((prev) => (next.every((v, i) => v === prev[i]) ? prev : next));
+        }
+        raf = requestAnimationFrame(loop);
+      };
       raf = requestAnimationFrame(loop);
     };
-    raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
+    // getPointAtLength is slow; sample in idle time so it doesn't block the hero on load (the timeline is far below it).
+    const ric = 'requestIdleCallback' in window;
+    const id = ric ? requestIdleCallback(start, { timeout: 2000 }) : window.setTimeout(start, 300);
+    return () => { if (ric) cancelIdleCallback(id); else clearTimeout(id); cancelAnimationFrame(raf); };
   }, []);
 
   return (

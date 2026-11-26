@@ -6,6 +6,8 @@ import SmoothScroll from '@/components/SmoothScroll';
 import Nav from '@/components/Nav';
 import AgentCursor from '@/components/AgentCursor';
 import Reveal from '@/components/Reveal';
+import IntroLoader, { introScript } from '@/components/IntroLoader';
+import Analytics from '@/components/Analytics';
 import { site } from '@/lib/content';
 
 const grotesk = Schibsted_Grotesk({ variable: '--font-grotesk', subsets: ['latin'] });
@@ -19,9 +21,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${grotesk.variable} ${mono.variable} ${caveat.variable}`}>
+    <html lang="en" className={`${grotesk.variable} ${mono.variable} ${caveat.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: introScript }} />
+        <noscript><style>{'.intro-loader{display:none!important}html{overflow:auto!important}'}</style></noscript>
+      </head>
       <body>
         <SmoothScroll>
+          <IntroLoader />
           <Nav />
           {children}
           <footer className="px-page flex flex-wrap justify-between gap-3 border-t border-ink/12 py-7 font-mono text-[11px] text-muted">
@@ -31,6 +38,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <AgentCursor />
           <Reveal />
         </SmoothScroll>
+        <Analytics />
       </body>
     </html>
   );

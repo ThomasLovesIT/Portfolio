@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { track } from '@vercel/analytics';
 import { contact } from '@/lib/content';
 import { EMAIL_RE } from '@/lib/validate';
 
@@ -36,6 +37,7 @@ export default function Contact() {
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || 'Could not send right now.');
       setStatus('sent');
+      track('Contact sent');
     } catch (err) {
       setError((err as Error).message); setStatus('idle');
     }

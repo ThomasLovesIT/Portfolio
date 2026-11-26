@@ -10,8 +10,11 @@ export default function ScreenCarousel({ shots }: { shots: Shot[] }) {
   useEffect(() => {
     let raf = 0;
     const loop = () => {
-      const s = sec.current!, t = track.current!, max = s.offsetHeight - innerHeight;
-      const pr = Math.max(0, Math.min(1, -s.getBoundingClientRect().top / max));
+      const s = sec.current, t = track.current;
+      // Refs clear on unmount before the effect cleanup cancels the frame; stop the loop then.
+      if (!s || !t) return;
+      const max = s.offsetHeight - innerHeight;
+      const pr = max > 0 ? Math.max(0, Math.min(1, -s.getBoundingClientRect().top / max)) : 0;
       t.style.transform = `translate3d(${-pr * Math.max(0, t.scrollWidth - innerWidth)}px,0,0)`;
       raf = requestAnimationFrame(loop);
     };

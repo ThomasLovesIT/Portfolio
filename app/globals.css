@@ -33,4 +33,7 @@
   a:hover { color: var(--color-ink); }
   input, textarea, button { font-family: inherit; }
   ::selection { background: var(--color-accent); color: #fff; }
+  /* IntroLoader: data-intro is set in <head> when skipped, or by the loader when it finishes */
+  html:not([data-intro]) { overflow: hidden; }
+  html[data-intro='skip'] .intro-loader { display: none; }
 }
