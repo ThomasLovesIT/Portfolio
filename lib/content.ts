@@ -41,7 +41,7 @@ const story = (a: string, b: string, c: string, d: string): Story[] => [
 export const projects: Project[] = [
   {
     slug: 'forbes-optical', idx: '01', title: 'Forbes Optical Clinic', sub: 'Clinic management system', period: 'Nov – Dec 2026',
-    tags: ['React', 'TypeScript', 'SQL'], stack: '[Placeholder] your stack', role: 'Freelance full-stack developer',
+    tags: ['Next.js', 'TypeScript', 'MySQL'], stack: 'Next.js · TypeScript · Prisma · MySQL · Better Auth · Tailwind · shadcn/ui', role: 'Freelance full-stack developer',
     cursor: 'Real clinic, real patients. Scroll the screens.',
     summary: 'A clinic management system for Forbes Optical: patients, eye exams, bills, installments and collections in one place, replacing the paper ledgers the front desk used to track who owed what.',
     story: story(
@@ -72,16 +72,17 @@ export const projects: Project[] = [
   },
   {
     slug: 'ai-study-assistant', idx: '03', title: 'AI Study Assistant', sub: 'Generative-AI learning platform', period: 'Jan – Feb 2026',
-    tags: ['MERN', 'Gemini'], stack: 'MongoDB · Express · React · Node · Google Gemini', role: 'Solo developer',
+    tags: ['MERN', 'Gemini'], stack: 'MongoDB · Express · React (Vite) · Node · Google Gemini 2.5 Flash-Lite · Tailwind · JWT', role: 'Solo developer',
     cursor: 'A 10-page PDF to a quiz in under 30s.',
     summary: 'A study platform that turns raw PDFs into structured study materials: 20+ flashcards and 10 quiz questions from a 10-page PDF in under 30 seconds.',
     story: story(
-      '[Placeholder] The problem: e.g. turning long lecture PDFs into flashcards by hand takes hours.',
-      '[Placeholder] Your angle: why generated study material beats a plain chatbot.',
-      'Upload a PDF, extract its text, and prompt Google Gemini to return structured flashcards and quiz questions, stored in MongoDB for review.',
+      'Studying from long lecture PDFs means rereading them, then writing flashcards and practice questions by hand. That is hours of prep before any real studying starts.',
+      'Let one upload do the prep: flashcards, a quiz, a summary and a chat that answers from that document only, so every answer stays tied to the course material instead of a general chatbot’s guesses.',
+      'Upload a PDF; the backend extracts the text, splits it into 500-word overlapping chunks, and prompts Gemini for flashcards, multiple-choice quizzes and summaries. Chat questions pull the most relevant chunks as context. Everything is stored per user in MongoDB behind JWT auth, with a dashboard that tracks progress.',
       '20+ flashcards and 10 quiz questions from a 10-page PDF in under 30 seconds.'),
     shots: [
-      { src: null, label: 'Screen one' }, { src: null, label: 'Screen two' }, { src: null, label: 'Screen three' }, { src: null, label: 'Screen four' },
+      { src: null, label: 'Dashboard' }, { src: null, label: 'Documents' }, { src: null, label: 'Flashcards' },
+      { src: null, label: 'Quiz' }, { src: null, label: 'Chat with your PDF' },
     ],
   },
 ];
