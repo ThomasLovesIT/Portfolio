@@ -81,8 +81,8 @@ export const projects: Project[] = [
       'Upload a PDF; the backend extracts the text, splits it into 500-word overlapping chunks, and prompts Gemini for flashcards, multiple-choice quizzes and summaries. Chat questions pull the most relevant chunks as context. Everything is stored per user in MongoDB behind JWT auth, with a dashboard that tracks progress.',
       '20+ flashcards and 10 quiz questions from a 10-page PDF in under 30 seconds.'),
     shots: [
-      { src: null, label: 'Dashboard' }, { src: null, label: 'Documents' }, { src: null, label: 'Flashcards' },
-      { src: null, label: 'Quiz' }, { src: null, label: 'Chat with your PDF' },
+      { src: '/ai-1.png', label: 'Dashboard' }, { src: '/ai-2.png', label: 'Documents' }, { src: '/ai-3.png', label: 'Flashcards' },
+      { src: '/ai-4.png', label: 'Quiz' }, { src: '/ai-5.png', label: 'Chat with your PDF' },
     ],
   },
 ];
